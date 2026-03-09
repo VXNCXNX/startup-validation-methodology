@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Startup Validation Methodology - How We Score Startup Ideas | Test Your Idea</title>
+  <meta name="description" content="Open methodology behind AI-powered startup validation. Learn how 40+ data sources are analyzed to score viability, find competitors, and identify market gaps.">
+  <meta property="og:title" content="AI Startup Validation Methodology - Test Your Idea">
+  <meta property="og:description" content="Open methodology: how AI analyzes 40+ live data sources to validate startup ideas in 60 seconds.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://vxncxnx.github.io/startup-validation-methodology/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AI Startup Validation Methodology">
+  <meta name="twitter:description" content="Open methodology: how AI analyzes 40+ live data sources to validate startup ideas in 60 seconds.">
+  <link rel="canonical" href="https://vxncxnx.github.io/startup-validation-methodology/">
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #141416;
+      --border: #23232a;
+      --text: #e4e4e7;
+      --text-muted: #8b8b94;
+      --accent: #6d5cff;
+      --accent-soft: rgba(109, 92, 255, 0.12);
+      --green: #22c55e;
+      --amber: #f59e0b;
+      --red: #ef4444;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 20px 0;
+    }
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .logo span { color: var(--accent); }
+    .header-link {
+      font-size: 14px;
+      color: var(--accent);
+      text-decoration: none;
+      padding: 8px 16px;
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+    .header-link:hover { background: var(--accent-soft); }
+    main { padding: 64px 0 80px; }
+    h1 {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+    .subtitle {
+      font-size: 18px;
+      color: var(--text-muted);
+      margin-bottom: 48px;
+      max-width: 560px;
+    }
+    h2 {
+      font-size: 22px;
+      font-weight: 600;
+      margin: 48px 0 16px;
+      letter-spacing: -0.01em;
+    }
+    h3 {
+      font-size: 17px;
+      font-weight: 600;
+      margin: 32px 0 12px;
+    }
+    p { margin-bottom: 16px; color: var(--text-muted); }
+    p strong { color: var(--text); font-weight: 500; }
+    a { color: var(--accent); }
+    ul, ol { margin: 0 0 16px 20px; color: var(--text-muted); }
+    li { margin-bottom: 8px; }
+    li strong { color: var(--text); font-weight: 500; }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 24px 0;
+    }
+    @media (max-width: 540px) { .card-grid { grid-template-columns: 1fr; } }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .card-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+    .card-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .score-scale {
+      display: flex;
+      gap: 2px;
+      margin: 24px 0;
+      border-radius: 8px;
+      overflow: hidden;
+      height: 36px;
+    }
+    .score-segment {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .seg-red { background: var(--red); }
+    .seg-amber { background: var(--amber); color: #000; }
+    .seg-green { background: var(--green); }
+
+    .stat-row {
+      display: flex;
+      gap: 24px;
+      margin: 32px 0;
+      flex-wrap: wrap;
+    }
+    .stat {
+      text-align: center;
+      flex: 1;
+      min-width: 120px;
+    }
+    .stat-num {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .section-list {
+      list-style: none;
+      margin: 24px 0;
+      padding: 0;
+      display: grid;
+      gap: 8px;
+    }
+    .section-list li {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0;
+    }
+    .section-list .num {
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 12px;
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .cta-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px;
+      text-align: center;
+      margin: 56px 0 0;
+    }
+    .cta-box h2 { margin-top: 0; }
+    .cta-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 12px 32px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+      margin-top: 16px;
+      transition: opacity 0.2s;
+    }
+    .cta-btn:hover { opacity: 0.9; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      font-size: 14px;
+    }
+    th, td {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    td { color: var(--text); }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 0;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    footer a { color: var(--text-muted); }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "AI Startup Validation Methodology",
+    "description": "Open methodology behind AI-powered startup idea validation using 40+ live data sources.",
+    "author": {
+      "@type": "Organization",
+      "name": "Test Your Idea",
+      "url": "https://testyouridea.app"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Test Your Idea",
+      "url": "https://testyouridea.app"
+    },
+    "datePublished": "2026-03-09",
+    "dateModified": "2026-03-09",
+    "mainEntityOfPage": "https://vxncxnx.github.io/startup-validation-methodology/",
+    "about": {
+      "@type": "SoftwareApplication",
+      "name": "Test Your Idea",
+      "url": "https://testyouridea.app",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How does AI validate a startup idea?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Test Your Idea uses AI to analyze 40+ live data sources including competitor databases, market research, community signals, and financial benchmarks. The system scores ideas on a 0-100 viability scale across 13 dimensions including market size, competition intensity, differentiation potential, and revenue feasibility."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What data sources are used for startup validation?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The methodology draws from web search engines, startup databases (Crunchbase, Product Hunt), community platforms (Reddit, Hacker News, IndieHackers), app stores, patent databases, social media sentiment, SEO keyword data, and financial modeling benchmarks. Over 40 sources are cross-referenced in each analysis."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How accurate is AI startup validation?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "AI validation is not a crystal ball. It identifies known risks, existing competitors, and market signals that founders often miss. Based on 2,500+ scanned ideas, the viability score correlates with factors like market saturation, timing, and competitive moats. It is most useful as a pre-build research accelerator, not a definitive pass/fail judgment."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a good viability score?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Scores range from 0-100. Below 40 indicates high risk with significant obstacles. 40-65 suggests a viable idea with notable challenges to address. Above 65 signals strong market potential with manageable competition. The average score across 2,500+ ideas is 54, meaning most raw ideas need refinement before building."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a href="https://testyouridea.app" class="logo">Test Your <span>Idea</span></a>
+      <a href="https://testyouridea.app" class="header-link">Try it free</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <h1>AI Startup Validation Methodology</h1>
+      <p class="subtitle">How we analyze 40+ live data sources to score startup viability in 60 seconds. Open methodology, transparent scoring.</p>
+
+      <div class="stat-row">
+        <div class="stat">
+          <div class="stat-num">2,500+</div>
+          <div class="stat-label">Ideas analyzed</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">40+</div>
+          <div class="stat-label">Data sources</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">13</div>
+          <div class="stat-label">Analysis dimensions</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">60s</div>
+          <div class="stat-label">Avg. scan time</div>
+        </div>
+      </div>
+
+      <h2>Why AI-Powered Validation?</h2>
+      <p>According to <strong>CB Insights</strong>, 42% of startups fail because there is no market need. Traditional validation takes weeks of manual research. <a href="https://testyouridea.app">Test Your Idea</a> compresses that research into a 60-second automated scan by cross-referencing live data sources that would take a human analyst days to cover.</p>
+      <p>The goal is not to replace founder judgment, but to surface the <strong>risks, competitors, and market signals</strong> that founders typically discover too late.</p>
+
+      <h2>The 13-Dimension Analysis Framework</h2>
+      <p>Every idea is evaluated across 13 independent dimensions. Each dimension contributes to the overall viability score.</p>
+
+      <ul class="section-list">
+        <li><span class="num">1</span> <strong>Overview</strong> &mdash; Market context, problem definition, target audience sizing</li>
+        <li><span class="num">2</span> <strong>Validation Signals</strong> &mdash; Evidence of real demand from search trends, forums, social media</li>
+        <li><span class="num">3</span> <strong>Competitor Landscape</strong> &mdash; Direct and indirect competitors, funding data, feature gaps</li>
+        <li><span class="num">4</span> <strong>SWOT Analysis</strong> &mdash; Strengths, weaknesses, opportunities, threats mapped to market data</li>
+        <li><span class="num">5</span> <strong>Differentiation Strategy</strong> &mdash; Unique angles, underserved niches, positioning opportunities</li>
+        <li><span class="num">6</span> <strong>Revenue Model</strong> &mdash; Pricing benchmarks, monetization paths, unit economics estimates</li>
+        <li><span class="num">7</span> <strong>MVP Roadmap</strong> &mdash; Core features, build vs. buy decisions, launch timeline</li>
+        <li><span class="num">8</span> <strong>Go-to-Market Plan</strong> &mdash; Acquisition channels ranked by cost and fit</li>
+        <li><span class="num">9</span> <strong>Risk Assessment</strong> &mdash; Regulatory, technical, and market risks with mitigation strategies</li>
+        <li><span class="num">10</span> <strong>Key Assumptions</strong> &mdash; Critical hypotheses that must be true for the idea to work</li>
+        <li><span class="num">11</span> <strong>Community Signals</strong> &mdash; Reddit, Hacker News, IndieHackers sentiment and discussions</li>
+        <li><span class="num">12</span> <strong>Actionable Playbook</strong> &mdash; Week-by-week execution plan tailored to the idea</li>
+        <li><span class="num">13</span> <strong>Synthesis &amp; Verdict</strong> &mdash; Final viability score with confidence intervals</li>
+      </ul>
+
+      <h2>Scoring System</h2>
+      <p>The viability score (0-100) is a weighted composite. It is not a simple average; dimensions with higher predictive value for startup success receive more weight.</p>
+
+      <div class="score-scale">
+        <div class="score-segment seg-red">0-39</div>
+        <div class="score-segment seg-amber">40-64</div>
+        <div class="score-segment seg-green">65-100</div>
+      </div>
+
+      <table>
+        <thead>
+          <tr><th>Range</th><th>Label</th><th>What it means</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>0-39</td><td>High Risk</td><td>Significant market obstacles, strong incumbents, or weak demand signals</td></tr>
+          <tr><td>40-64</td><td>Viable with Risks</td><td>Real opportunity exists but key challenges must be addressed first</td></tr>
+          <tr><td>65-100</td><td>Strong Potential</td><td>Clear demand, manageable competition, viable path to revenue</td></tr>
+        </tbody>
+      </table>
+
+      <p>The average score across 2,500+ scanned ideas is <strong>54</strong>, confirming that most raw startup ideas need refinement. Ideas scoring below 40 are not necessarily bad; they often need a pivot in positioning, audience, or business model.</p>
+
+      <h2>Data Sources</h2>
+      <p>The analysis pipeline pulls from four categories of live data:</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">Market Intelligence</div>
+          <div class="card-desc">Search engine data, keyword volumes, trend analysis, market sizing databases</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Competitor Discovery</div>
+          <div class="card-desc">Startup databases, app stores, product directories, funding records, feature comparisons</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Community Signals</div>
+          <div class="card-desc">Reddit, Hacker News, IndieHackers, Twitter/X, forum discussions, sentiment analysis</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Financial Benchmarks</div>
+          <div class="card-desc">Industry pricing data, SaaS metrics (CAC, LTV, churn), comparable revenue models</div>
+        </div>
+      </div>
+
+      <h2>Methodology Principles</h2>
+
+      <h3>Evidence over opinion</h3>
+      <p>Every claim in the report is backed by a data source. If no evidence exists for a market signal, the report says so explicitly rather than speculating.</p>
+
+      <h3>Transparent limitations</h3>
+      <p>AI validation cannot predict founder execution quality, timing luck, or black swan events. The report is a <strong>research accelerator</strong>, not a verdict. We state confidence levels for each finding.</p>
+
+      <h3>Actionable output</h3>
+      <p>Reports include specific next steps, not vague advice. Each recommendation links to the evidence that supports it, so founders can verify and decide independently.</p>
+
+      <h3>Continuous calibration</h3>
+      <p>The scoring model is periodically recalibrated against real startup outcomes. As the dataset of scanned ideas grows (currently 2,500+), pattern recognition improves.</p>
+
+      <div class="cta-box">
+        <h2>Test your startup idea</h2>
+        <p>Free scan. 40+ data sources. Results in 60 seconds.</p>
+        <a href="https://testyouridea.app" class="cta-btn">Scan your idea free</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>Built by <a href="https://testyouridea.app">Test Your Idea</a>. Helping founders validate before they build.</p>
+    </div>
+  </footer>
+</body>
+</html>
